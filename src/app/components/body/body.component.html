@@ -1,0 +1,294 @@
+<app-header></app-header>
+<div class="container" fxLayoutAlign="center center">
+<form action="" [formGroup]="formCard" class="formCard">
+    <div class="p-grid">
+        <!-- Columna 1 -->
+        <div class="p-col-3">
+            <p-inputGroup >
+                <div *ngIf="formCard.get('name')?.hasError('required') && formCard.get('name')?.touched" class="error-message">
+                    Este campo es obligatorio.
+                </div>
+                <p-inputGroupAddon>
+                    <i class="pi pi-user"></i>
+                </p-inputGroupAddon>
+                <input pInputText placeholder="Nombre" formControlName="name" />
+            </p-inputGroup>
+            <p-inputGroup>
+                <div *ngIf="formCard.get('lastName')?.hasError('required') && formCard.get('lastName')?.touched" class="error-message">
+                  Este campo es obligatorio.
+                </div>
+                <p-inputGroupAddon>
+                  <i class="pi pi-user"></i>
+                </p-inputGroupAddon>
+                <input pInputText placeholder="Apellido" formControlName="lastName" id="lastName"/>
+              </p-inputGroup>
+            <p-inputGroup >
+                <p-inputGroupAddon>
+                    <i class="pi pi-user"></i>
+                </p-inputGroupAddon>
+                <input pInputText type="number" placeholder="CC" formControlName="cc"/>
+            </p-inputGroup>
+
+    </div>
+    <div class="p-col-3">
+        <p-inputGroup >
+            <p-inputGroupAddon>
+                <i class="pi pi-phone"></i>
+            </p-inputGroupAddon>
+            <input pInputText type="number" placeholder="Teléfono" formControlName="phone"/>
+        </p-inputGroup>
+    <p-inputGroup >
+        <p-inputGroupAddon>
+            <i class="pi pi-phone"></i>
+        </p-inputGroupAddon>
+        <input pInputText  placeholder="Email" formControlName="email"/>
+    </p-inputGroup>
+    <p-inputGroup >
+        <p-inputGroupAddon>
+            <i class="pi pi-phone"></i>
+        </p-inputGroupAddon>
+        <input pInputText  placeholder="Dirección" formControlName="address"/>
+    </p-inputGroup>
+    
+</div>
+<div class="p-col-3">
+    <p-inputGroup >
+        <p-inputGroupAddon>
+            <i class="pi pi-phone"></i>
+        </p-inputGroupAddon>
+        <p-calendar placeholder="Fecha de cumpleaños" formControlName="birthDate"></p-calendar>
+    </p-inputGroup>
+    <p-inputGroup >
+        <p-inputGroupAddon>
+            <i class="pi pi-phone"></i>
+        </p-inputGroupAddon>
+        <p-calendar placeholder="Fecha de creación" formControlName="insertDate"></p-calendar>
+    </p-inputGroup>
+    <p-inputGroup >
+        <p-inputGroupAddon>
+            <i class="pi pi-phone"></i>
+        </p-inputGroupAddon>
+        <p-calendar placeholder="Fecha de modificacion" formControlName="modificationDate"></p-calendar>
+    </p-inputGroup>
+    
+    
+</div>
+<div class="p-col-3">
+<p-inputGroup id="">
+ <label for="enableUser">Usuario Habilitado </label>
+    <p-checkbox  [binary]="true" formControlName="enableUser" inputId="enableUser"></p-checkbox>
+</p-inputGroup>
+  <!--  <p-inputGroup>
+        <p-inputGroupAddon>
+            <i class="pi pi-credit-card"></i>
+        </p-inputGroupAddon>
+        <input type="number" pInputText placeholder="Numero de la targeta de credito" formControlName="number" />
+    </p-inputGroup>
+    
+    <p-inputGroup id="smallGroup">
+        <p-inputGroupAddon>
+            <i class="pi pi-id-card"></i>
+        </p-inputGroupAddon>
+        <input type="text" pInputText placeholder="Type" formControlName="type" id="type" />
+    </p-inputGroup>
+    <p-inputGroup id="smallGroup">
+        <p-inputGroupAddon>CVV</p-inputGroupAddon>
+        <input type="text" pInputText placeholder="CVV" formControlName="cvv" id="cvv"/>
+    </p-inputGroup>
+    <p-inputGroup id="smallGroup">
+        <p-inputGroupAddon>Mes</p-inputGroupAddon>
+        <input type="text" pInputText placeholder="MM" formControlName="monthExpiry" id="monthExpiry"/>
+    </p-inputGroup>
+    <p-inputGroup id="smallGroup">
+        <p-inputGroupAddon>Año</p-inputGroupAddon>
+        <input type="text" pInputText placeholder="YY" formControlName="yearExpiry" id="yearExpiry"/>
+    </p-inputGroup>
+    -->
+    <button pButton pRipple label="Enviar" class="p-button-success" (click)="createCard()"></button>
+</div>
+</div>
+</form>
+<div class="tablaContainer">
+<p-table  [value]="cards" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header" >
+        <tr>
+            <th>Editar</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Cedula</th>
+            <th>No. Celular</th>
+            <th>Correo</th>
+            <th>Dirección</th>
+            <th>Fecha de Nacimiento</th>
+            <th>Fecha de inserción</th>
+            <th>Fecha de modificación</th>
+            <th>Usario Habilitado</th>
+            
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-card >
+        <tr>
+            <td><p-button icon="pi pi-pencil" [rounded]="true" severity="secondary" (click)="showDialog(card)"></p-button></td>
+            <td>{{card.name}}</td>
+            <td>{{card.lastName}}</td>
+            <td>{{card.cc}}</td>
+            <td>{{card.phone}}</td>
+            <td>{{card.email}}</td>
+            <td>{{card.address}}</td>
+            <td>{{card.birthDate}}</td>
+            <td>{{card.insertDate}}</td>
+            <td>{{card.modificationDate}}</td>
+            <td>{{card.enableUser}}</td>
+        </tr>
+    </ng-template>
+</p-table>
+</div>
+
+<p-dialog header="Actualizar datos de la tarjeta" [(visible)]="display" [style]="{width: '50vw'}">
+    <form action="" [formGroup]="formCard" class="formCard">
+        <div class="p-grid">
+            <!-- Columna 1 -->
+            <div class="p-col-3">
+                <p-inputGroup >
+                    <p-inputGroupAddon>
+                        <i class="pi pi-user"></i>
+                    </p-inputGroupAddon>
+                    <input pInputText placeholder="Nombre" formControlName="name"/>
+                </p-inputGroup>
+                <p-inputGroup >
+                    <p-inputGroupAddon>
+                        <i class="pi pi-user"></i>
+                    </p-inputGroupAddon>
+                    <input pInputText placeholder="Apellido" formControlName="lastName"/>
+                </p-inputGroup>
+                <p-inputGroup >
+                    <p-inputGroupAddon>
+                        <i class="pi pi-user"></i>
+                    </p-inputGroupAddon>
+                    <input pInputText type="number" placeholder="CC" formControlName="cc"/>
+                </p-inputGroup>
+    
+        </div>
+        <div class="p-col-3">
+            <p-inputGroup >
+                <p-inputGroupAddon>
+                    <i class="pi pi-phone"></i>
+                </p-inputGroupAddon>
+                <input pInputText type="number" placeholder="Teléfono" formControlName="phone"/>
+            </p-inputGroup>
+        <p-inputGroup >
+            <p-inputGroupAddon>
+                <i class="pi pi-phone"></i>
+            </p-inputGroupAddon>
+            <input pInputText  placeholder="Email" formControlName="email"/>
+        </p-inputGroup>
+        <p-inputGroup >
+            <p-inputGroupAddon>
+                <i class="pi pi-phone"></i>
+            </p-inputGroupAddon>
+            <input pInputText  placeholder="Dirección" formControlName="address"/>
+        </p-inputGroup>
+        
+    </div>
+    <div class="p-col-3">
+        <p-inputGroup >
+            <p-inputGroupAddon>
+                <i class="pi pi-phone"></i>
+            </p-inputGroupAddon>
+            <p-calendar placeholder="Fecha de cumpleaños" formControlName="birthDate"></p-calendar>
+        </p-inputGroup>
+        <p-inputGroup >
+            <p-inputGroupAddon>
+                <i class="pi pi-phone"></i>
+            </p-inputGroupAddon>
+            <p-calendar placeholder="Fecha de creación" formControlName="insertDate"></p-calendar>
+        </p-inputGroup>
+        <p-inputGroup >
+            <p-inputGroupAddon>
+                <i class="pi pi-phone"></i>
+            </p-inputGroupAddon>
+            <p-calendar placeholder="Fecha de modificacion" formControlName="modificationDate"></p-calendar>
+        </p-inputGroup>
+        
+        
+    </div>
+    <div class="p-col-3">
+    <p-inputGroup id="">
+     <label for="enableUser">Usuario Habilitado </label>
+        <p-checkbox  [binary]="true" formControlName="enableUser" inputId="enableUser"></p-checkbox>
+    </p-inputGroup>
+      <!--  <p-inputGroup>
+            <p-inputGroupAddon>
+                <i class="pi pi-credit-card"></i>
+            </p-inputGroupAddon>
+            <input type="number" pInputText placeholder="Numero de la targeta de credito" formControlName="number" />
+        </p-inputGroup>
+        
+        <p-inputGroup id="smallGroup">
+            <p-inputGroupAddon>
+                <i class="pi pi-id-card"></i>
+            </p-inputGroupAddon>
+            <input type="text" pInputText placeholder="Type" formControlName="type" id="type" />
+        </p-inputGroup>
+        <p-inputGroup id="smallGroup">
+            <p-inputGroupAddon>CVV</p-inputGroupAddon>
+            <input type="text" pInputText placeholder="CVV" formControlName="cvv" id="cvv"/>
+        </p-inputGroup>
+        <p-inputGroup id="smallGroup">
+            <p-inputGroupAddon>Mes</p-inputGroupAddon>
+            <input type="text" pInputText placeholder="MM" formControlName="monthExpiry" id="monthExpiry"/>
+        </p-inputGroup>
+        <p-inputGroup id="smallGroup">
+            <p-inputGroupAddon>Año</p-inputGroupAddon>
+            <input type="text" pInputText placeholder="YY" formControlName="yearExpiry" id="yearExpiry"/>
+        </p-inputGroup>
+        -->
+        <button pButton pRipple label="Enviar" class="p-button-success" (click)="createCard()"></button>
+    </div>
+    </div>
+    </form>
+ <!--   <form action="" [formGroup]="formCard" class="formEditCard">
+        <p-inputGroup >
+            <p-inputGroupAddon>
+                <i class="pi pi-user"></i>
+            </p-inputGroupAddon>
+            <input pInputText placeholder="Nombre" formControlName="name"/>
+        </p-inputGroup>
+        
+        <p-inputGroup>
+            <p-inputGroupAddon>
+                <i class="pi pi-credit-card"></i>
+            </p-inputGroupAddon>
+            <input type="number" pInputText placeholder="Numero de la targeta de credito" formControlName="number" />
+        </p-inputGroup>
+        
+        <p-inputGroup>
+            <p-inputGroupAddon>
+                <i class="pi pi-id-card"></i>
+            </p-inputGroupAddon>
+            <input type="text" pInputText placeholder="Type" formControlName="type" />
+        </p-inputGroup>
+        <p-inputGroup>
+            <p-inputGroupAddon>CVV</p-inputGroupAddon>
+            <input type="number" pInputText placeholder="CVV" formControlName="cvv"/>
+        </p-inputGroup>
+        <p-inputGroup>
+            <p-inputGroupAddon>
+                <i class="pi pi-user"></i>
+            </p-inputGroupAddon>
+            <input type="text" pInputText placeholder="Estado" formControlName="status"/>
+        </p-inputGroup>
+        <p-inputGroup>
+            <p-inputGroupAddon>CVV</p-inputGroupAddon>
+            <input type="text" pInputText placeholder="Mes" formControlName="monthExpiry"/>
+        </p-inputGroup>
+        <p-inputGroup>
+            <p-inputGroupAddon>CVV</p-inputGroupAddon>
+            <input type="text" pInputText placeholder="año" formControlName="yearExpiry"/>
+        </p-inputGroup>
+        <button pButton pRipple label="Actualizar" class="p-button-success" (click)="createCard()"></button>
+    
+    </form>
+    -->
+</p-dialog>
+</div>

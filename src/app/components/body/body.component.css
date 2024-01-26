@@ -1,0 +1,54 @@
+h1 {
+    text-align: center;
+}
+
+.formCard {
+    margin: auto 30px;
+    display: inline-block;
+    padding: 25px 10px;
+}
+
+.formEditCard{
+    padding: 0px 160px;
+}
+
+.p-inputgroup {
+    margin-right: 10px;
+}
+
+.p-col-3 {
+    display: inline-block;
+    vertical-align: top;
+}
+.p-inputgroup {
+    margin-bottom: 10px;
+}
+
+
+
+.smallGroup{
+    width: 80;
+}
+
+p-inputgroup#smallGroup {
+    width: 50%;
+}
+
+button.p-element.p-button-success.p-button.p-component {
+    width: 200px;
+}
+
+.tablaContainer {
+    padding: 0px 40px;
+}
+.formEditCard .p-inputgroup {
+    margin-bottom: 7px;
+}
+
+input#cvv , input#monthExpiry, input#yearExpiry{
+    max-width: 65px;
+}
+
+input#type{
+    max-width: 80px;
+}
